@@ -1,0 +1,134 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+enum Role {
+    USER
+    ADMIN
+}
+
+model Customer {
+    id          String     @id @default(uuid())
+    createdBy   User       @relation(fields: [userId], references: [id])
+    userId      String
+    name        String
+    email       String     @unique
+    accountNo   String?
+    vatTinNo    Int        @default(0)
+    address     String?
+    city        String?
+    country     String?
+    phoneNumber String
+    createdAt   DateTime   @default(now())
+    updatedAt   DateTime   @updatedAt
+    documents   Document[]
+
+    @@map("customers")
+}
+
+model User {
+    id                String     @id @default(uuid())
+    email             String     @unique
+    username          String     @unique
+    firstName         String
+    lastName          String
+    password          String
+    isEmailVerified   Boolean    @default(false)
+    provider          String     @default("email")
+    googleId          String?    @map("google_id")
+    avatar            String?
+    businessName      String?
+    phoneNumber       String     @default("+254123456789")
+    address           String?
+    city              String?
+    country           String?
+    passwordChangedAt DateTime?
+    roles             Role[]     @default([USER])
+    active            Boolean    @default(true)
+    refreshToken      String[]
+    createdAt         DateTime   @default(now())
+    updatedAt         DateTime   @updatedAt
+    customers         Customer[]
+    documents         Document[]
+
+    @@map("users")
+}
+
+model Payment {
+    id             String        @id @default(uuid())
+    paidBy         String
+    datePaid       String
+    amountPaid     Float
+    paymentMethod  PaymentMethod @default(Cash)
+    additionalInfo String?
+    createdAt      DateTime      @default(now())
+    updatedAt      DateTime      @updatedAt
+    document       Document      @relation(fields: [documentId], references: [id])
+    documentId     String
+
+    @@map("payments")
+}
+
+model BillingItem {
+    id         String   @id @default(uuid())
+    itemName   String
+    unitPrice  Float
+    quantity   Int
+    discount   String?
+    document   Document @relation(fields: [documentId], references: [id])
+    documentId String
+
+    @@map("billing_items")
+}
+
+model Document {
+    id                  String        @id @default(uuid())
+    documentNumber      String        @unique
+    createdBy           User          @relation(fields: [userId], references: [id])
+    userId              String
+    customer            Customer      @relation(fields: [customerId], references: [id])
+    customerId          String
+    documentType        DocumentType  @default(Invoice)
+    dueDate             DateTime
+    additionalInfo      String?
+    termsConditions     String?
+    status              PaymentStatus @default(NotPaid)
+    subTotal            Float
+    salesTax            Float
+    rates               String
+    total               Float
+    currency            String
+    totalAmountReceived Float         @default(0)
+    billingItems        BillingItem[]
+    paymentRecords      Payment[]
+    createdAt           DateTime      @default(now())
+    updatedAt           DateTime      @updatedAt
+
+    @@map("documents")
+}
+
+enum PaymentMethod {
+    Cash
+    MobileMoney
+    PayPal
+    CreditCard
+    BankTransfer
+    Others
+}
+
+enum DocumentType {
+    Invoice
+    Receipt
+    Quotation
+}
+
+enum PaymentStatus {
+    Paid
+    NotFullyPaid @map("Not Fully Paid")
+    NotPaid      @map("Not Paid")
+}
