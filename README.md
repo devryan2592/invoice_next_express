@@ -1,5 +1,3 @@
-
-```markdown:README.md
 # Invoice Management System
 
 A modern, full-stack invoice management system built with TypeScript, Express, and PostgreSQL.
@@ -55,42 +53,42 @@ This application allows businesses to manage customers, create invoices, track p
 ## Getting Started
 
 1. **Clone the Repository**
-```bash
-git clone <repository-url>
-cd invoice_app
-```
+    ```bash
+    git clone <repository-url>
+    cd invoice_app
+    ```
 
 2. **Environment Setup**
-```bash
-# Copy environment files
-cp backend/.env.example backend/.env
-```
+    ```bash
+    # Copy environment files
+    cp backend/.env.example backend/.env
+    ```
 
 3. **Start Docker Services**
-```bash
-# Using Make
-make build
+    ```bash
+    # Using Make
+    make build
 
-# Without Make
-docker compose -f local.yml up --build -d
-```
+    # Without Make
+    docker compose -f local.yml up --build -d
+    ```
 
 4. **Install Dependencies**
-```bash
-cd backend
-npm install
-```
+    ```bash
+    cd backend
+    npm install
+    ```
 
 5. **Database Setup**
-```bash
-npm run prisma:generate
-npm run prisma:push
-```
+    ```bash
+    npm run prisma:generate
+    npm run prisma:push
+    ```
 
 6. **Start Development Server**
-```bash
-npm run dev
-```
+    ```bash
+    npm run dev
+    ```
 
 ## Docker Services & Ports
 
@@ -185,10 +183,6 @@ make db-shell
 docker compose -f local.yml exec postgres psql -U postgres -d app_db
 ```
 
-## API Documentation
-
-Coming soon...
-
 ## Testing
 
 ```bash
@@ -202,39 +196,39 @@ npm run test:watch
 ## Development Workflow
 
 1. **Start Services**
-```bash
-make up
-```
+    ```bash
+    make up
+    ```
 
 2. **Watch for Changes**
-```bash
-npm run dev
-```
+    ```bash
+    npm run dev
+    ```
 
 3. **Database Changes**
-```bash
-npm run prisma:generate  # After schema changes
-npm run prisma:push     # Update database
-```
+    ```bash
+    npm run prisma:generate  # After schema changes
+    npm run prisma:push     # Update database
+    ```
 
 ## Troubleshooting
 
 1. **Reset Database**
-```bash
-make reset-db
-```
+    ```bash
+    make reset-db
+    ```
 
 2. **View Logs**
-```bash
-make logs
-make logs-api   # API logs only
-make logs-db    # Database logs only
-```
+    ```bash
+    make logs
+    make logs-api   # API logs only
+    make logs-db    # Database logs only
+    ```
 
 3. **Check Service Health**
-```bash
-make health
-```
+    ```bash
+    make health
+    ```
 
 ## Contributing
 
@@ -247,5 +241,5 @@ make health
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-```
+
 
