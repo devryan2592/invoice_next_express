@@ -1,9 +1,10 @@
-I'll create an updated README.md file with more specific information about our current setup and implementation.
 
 ```markdown:README.md
 # Invoice Management System
 
-A modern, full-stack invoice management system built with TypeScript, Express, and PostgreSQL. This application allows businesses to manage customers, create invoices, track payments, and handle document generation.
+A modern, full-stack invoice management system built with TypeScript, Express, and PostgreSQL.
+
+This application allows businesses to manage customers, create invoices, track payments, and handle document generation.
 
 ## Core Features
 
@@ -248,13 +249,3 @@ make health
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 ```
 
-This updated README:
-1. Provides more detailed information about the current implementation
-2. Includes specific ports and configurations
-3. Has a comprehensive development workflow section
-4. Includes troubleshooting steps
-5. Better organizes the information with clear sections
-6. Adds a table for services and ports
-7. Includes more detailed project structure
-8. Provides clear instructions for database access
-9. Lists all available development tools and commands
