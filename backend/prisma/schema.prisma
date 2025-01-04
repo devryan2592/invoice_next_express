@@ -32,27 +32,30 @@ model Customer {
 }
 
 model User {
-    id                String     @id @default(uuid())
-    email             String     @unique
-    username          String     @unique
+    id                String             @id @default(uuid())
+    email             String             @unique
+    username          String             @unique
     firstName         String
     lastName          String
     password          String
-    isEmailVerified   Boolean    @default(false)
-    provider          String     @default("email")
-    googleId          String?    @map("google_id")
+    isEmailVerified   Boolean            @default(false)
+    twoFactorEnabled  Boolean            @default(true)
+    twoFactorSecret   String?
+    provider          String             @default("email")
+    googleId          String?            @map("google_id")
     avatar            String?
     businessName      String?
-    phoneNumber       String     @default("+254123456789")
+    phoneNumber       String             @default("+254123456789")
     address           String?
     city              String?
     country           String?
     passwordChangedAt DateTime?
-    roles             Role[]     @default([USER])
-    active            Boolean    @default(true)
-    refreshToken      String[]
-    createdAt         DateTime   @default(now())
-    updatedAt         DateTime   @updatedAt
+    roles             Role[]             @default([USER])
+    active            Boolean            @default(true)
+    sessions          Session[]
+    emailVerification EmailVerification?
+    createdAt         DateTime           @default(now())
+    updatedAt         DateTime           @updatedAt
     customers         Customer[]
     documents         Document[]
 
@@ -131,4 +134,31 @@ enum PaymentStatus {
     Paid
     NotFullyPaid @map("Not Fully Paid")
     NotPaid      @map("Not Paid")
+}
+
+model Session {
+    id           String   @id @default(uuid())
+    user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+    userId       String
+    refreshToken String   @unique
+    userAgent    String
+    ipAddress    String
+    isValid      Boolean  @default(true)
+    expiresAt    DateTime
+    createdAt    DateTime @default(now())
+    updatedAt    DateTime @updatedAt
+
+    @@map("sessions")
+}
+
+model EmailVerification {
+    id        String   @id @default(uuid())
+    user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+    userId    String   @unique
+    token     String   @unique
+    expiresAt DateTime
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@map("email_verifications")
 }

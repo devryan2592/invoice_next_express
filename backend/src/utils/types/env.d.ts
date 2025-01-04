@@ -1,18 +1,32 @@
 declare global {
   namespace NodeJS {
     interface ProcessEnv {
-      PORT: string;
+      // Server
       NODE_ENV: 'development' | 'production' | 'test';
+      PORT: string;
+      
+      // Database
       DATABASE_URL: string;
-      POSTGRES_HOST: string;
-      POSTGRES_PORT: string;
-      POSTGRES_DB: string;
-      POSTGRES_USER: string;
-      POSTGRES_PASSWORD: string;
-      REDIS_HOST: string;
-      REDIS_PORT: string;
-      SMTP_HOST: string;
-      SMTP_PORT: string;
+      
+      // JWT
+      JWT_ACCESS_SECRET: string;
+      JWT_REFRESH_SECRET: string;
+      
+      // Frontend
+      FRONTEND_URL: string;
+      
+      // Email Configuration
+      EMAIL_FROM: string;
+      SMTP_HOST?: string;
+      SMTP_PORT?: string;
+      
+      // Mailgun Configuration (Production)
+      MAILGUN_API_KEY?: string;
+      MAILGUN_DOMAIN?: string;
+      
+      // Optional: OAuth (if implementing social login)
+      GOOGLE_CLIENT_ID?: string;
+      GOOGLE_CLIENT_SECRET?: string;
     }
   }
 }

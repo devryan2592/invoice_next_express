@@ -11,8 +11,6 @@ export class UserService {
         ...data,
         password: hashedPassword,
         roles: ['USER'],
-        // Remove passwordConfirm as it's not stored in the database
-        passwordConfirm: undefined
       }
     });
   }
